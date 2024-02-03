@@ -9,7 +9,7 @@ import Company from './components/Company/Company.jsx'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout/>}>
-      <Route path='' element={<Home/>}/>
+      <Route path='/' element={<Home/>}/>
       <Route path="/company" element={<Company/>}/>
     </Route>
   )

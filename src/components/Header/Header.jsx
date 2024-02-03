@@ -10,9 +10,7 @@ const Header = () => {
         { name: "Company", link: "/company" },
 
     ];
-
     let [open, setOpen] = useState(false);
-    
     return (
         <div className='shadow-md w-full fixed top-0 left-0 bg-indigo-900'>
             <div className='md:flex items-center justify-between  py-4 md:px-10 px-7'>
