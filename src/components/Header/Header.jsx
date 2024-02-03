@@ -1,45 +1,47 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import '/src/Output.css';
+import Button from './Button';
+
 
 const Header = () => {
-    const [isMenuOpen, setMenuOpen] = useState(false);
-    const [activeItem, setActiveItem]= useState("");
-    const onToggleMenu = () => {
-        setMenuOpen(!isMenuOpen);
-    };
-    const handleItemClick=(e)=>{
-        setActiveItem(e)
-    }
+    let Links = [
+        { name: "Home", link: "/" },
+        { name: "Company", link: "/company" },
+
+    ];
+
+    let [open, setOpen] = useState(false);
+    
     return (
-        <nav className="flex justify-between bg-indigo-900 w-full items-center h-16  px-5 md:px-6">
-            <div>
-                <Link className="font-bold text-2xl cursor-pointer text-yellow-300" to="/">Logo</Link>
-            </div>
-            <div className={`nav-links duration-500 md:static absolute bg-indigo-900 text-white my-4 md:min-h-fit min-h-[50px] left-0 top-${isMenuOpen ? '[9%]' : '[-100%]'} md:w-auto  w-full h-30 flex item-center px-5 py-4`}>
-                <ul className="flex md:flex-row flex-col md:items-end md:gap-[4vw] gap-8 w-full ">
-                    <li>
-                        <Link className={`hover:text-gray-500 ${
-                                activeItem === "home" ? "text-yellow-300" : ""
-                            }`} to="/" onClick={() => handleItemClick("home")}
->Home</Link>
-                    </li>
-                    <li>
-                        <Link className={`hover:text-gray-500 ${
-                                activeItem === "company" ? "text-yellow-300" : ""
-                            }`} to="/company" onClick={() => handleItemClick("company")}>Company</Link>
-                    </li>
-                    <button className="bg-[#a6c1ee] text-white px-5 py-1 rounded-full hover:bg-[#87acec]">
-                        Sign in
-                    </button>
+        <div className='shadow-md w-full fixed top-0 left-0 bg-indigo-900'>
+            <div className='md:flex items-center justify-between  py-4 md:px-10 px-7'>
+                <div className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] text-gray-800'>
+                    <span className='text-3xl text-indigo-600 mr-1 pt-2'>
+                        <ion-icon name="logo-ionic"></ion-icon>
+                    </span>
+                    Logo
+                </div>
+
+                <div onClick={() => setOpen(!open)} className='text-3xl absolute right-8 top-3 border px-2 rounded-lg cursor-pointer md:hidden text-white'>
+                    <ion-icon name={open ? 'close' : 'menu'}>&#8801;</ion-icon>
+                </div>
+
+                <ul className={`md:flex md:items-center text-white md:pb-0  text-center pb-12 my-[-20px] absolute md:static bg-indigo-900 md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20 ' : 'top-[-490px]'}`}>
+                    {
+                        Links.map((link) => (
+                            <li key={link.name} className='md:ml-8 text-xl md:my-0 my-7'>
+                                <Link to={link.link} className=' hover:text-yellow-400 duration-500'>{link.name}</Link>
+                            </li>
+                        ))
+                    }
+                    <Button>
+                        Sign In
+                    </Button>
                 </ul>
             </div>
-            <div className=" cursor-pointer md:hidden">
-                
-                <h1 className="text-4xl font-bold text-yellow-300 border rounded-md item-center px-1" onClick={onToggleMenu}>&#8801;</h1>
-            </div>
-        </nav>
-    );
+        </div>
+    )
 }
 
-export default Header;
+export default Header

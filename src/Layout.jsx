@@ -6,7 +6,7 @@ import Header from "./components/Header/Header";
 const Layout=()=>{
     return(
         <>
-        <Header/>
+        <Header />
 
         <Outlet />
         {/* <Footer/> */}

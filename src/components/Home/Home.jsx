@@ -40,7 +40,7 @@ const Home = () => {
     };
 
     return (
-        <div className="flex flex-col items-start justify-between w-full h-full bg-indigo-800 px-5 py-5">
+        <div className="flex flex-col items-start justify-between w-full h-full bg-indigo-800 px-5 py-[20vh]">
             <p className="font-bold px-5 py-5 mx-5 my-5 text-3xl uppercase text-yellow-400">
                 Sign Up Now
                 <br />
@@ -50,7 +50,7 @@ const Home = () => {
                 You all will get to know about <br /> the company interview experience
             </p>
 
-            <form className="px-5 mx-5 py-5 my-5 text-l text-center md:text-xl" onSubmit={handleSubmit}>
+            <form className="px-5 mx-5 py-5 my-5 text-l text-center text-yellow-950 md:text-xl" onSubmit={handleSubmit}>
                 <div className="font-bold text-xl text-yellow py-2 flex flex-col md:flex-row">
                     <div>
                         <label htmlFor="name" className=" px-5 text-yellow-400">NAME : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
