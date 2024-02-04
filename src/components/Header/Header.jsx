@@ -6,11 +6,13 @@ import Button from './Button';
 
 const Header = () => {
     let Links = [
-        { name: "Home", link: "/" },
+        { name: "Home", link: "/main" },
         { name: "Company", link: "/company" },
-
     ];
+    const userData = JSON.parse(localStorage.getItem('user')) || {};
+
     let [open, setOpen] = useState(false);
+    
     return (
         <div className='shadow-md w-full fixed top-0 left-0 bg-indigo-900'>
             <div className='md:flex items-center justify-between  py-4 md:px-10 px-7'>
@@ -34,7 +36,7 @@ const Header = () => {
                         ))
                     }
                     <Button>
-                        Sign In
+                        @{userData.name}
                     </Button>
                 </ul>
             </div>
