@@ -3,7 +3,7 @@ import photo from '/public/main.jpg';
 
 const Main = () => {
     return(
-        <div className="bg-indigo-800 flex flex-col md:flex-row h-full w-full px-10 py-10 my-10 text-yellow-300">
+        <div className="bg-sky-900 flex flex-col md:flex-row h-full w-full px-10 py-10 my-10 text-yellow-300">
             <div 
                 className="font-bold flex-col flex text-lg md:text-2xl text-center sm:w-[150vh]  px-7 pt-7"
             >
