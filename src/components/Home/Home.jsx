@@ -4,6 +4,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 import './home.css';
 import { useNavigate } from "react-router-dom";
 import Tilt from 'react-parallax-tilt';
+import Cookies from 'js-cookie';
 
 
 const Home = () => {
@@ -42,7 +43,7 @@ const Home = () => {
         setIsConfirmPasswordValid(password === confirmPassword);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         validateEmail();
@@ -50,10 +51,33 @@ const Home = () => {
         validateConfirmPassword();
 
         if (isEmailValid && isPasswordValid && isConfirmPasswordValid) {
-            console.log("Form submitted:", { name, email, password });
-            localStorage.setItem('user', JSON.stringify({ name, email, password }));
-            navigate("/login");
+            try {
+                const response = await fetch('http://localhost:8000/api/api/register/', {
+                    method: 'POST',
+                    headers: {
+                        'content-Type': 'application/json',
+                        'X-CSRFToken': Cookies.get('csrftoken'),
+                    },
+                    body: JSON.stringify({ name, email, password }),
+                });
 
+                if (response.ok) {
+                    console.log("Form submitted:", { name, email, password });
+                    localStorage.setItem('user', JSON.stringify({ name, email, password }));
+                    navigate("/login");
+                }
+                 
+                else if(response.status==400){
+                    console.error("Email already exist");
+                    
+                }
+                else{
+                    console.error('Registration failed.');
+                }
+            }
+            catch(error){
+                console.error('Error: ', error);
+            }
         }
         else {
             console.log("Invalid email or password. Please check your input.");
@@ -108,6 +132,7 @@ const Home = () => {
 
                 <div className="border border-spacing-36 border-opacity-30 border-r-0 border-b-0 backdrop-filter backdrop-blur-sm md:ml-[45vh] py-5 mb-10 mt-[-30vh] md:mt-[-22vh] py-5 rounded-2xl md:w-[120vh]  items-center text-center">
                     <form
+                        method="POST"
                         className="px-5 mx-5  text-l   text-center justify-center items-center  text-yellow-950 md:text-xl"
                         onSubmit={handleSubmit}
                     >
@@ -175,6 +200,7 @@ const Home = () => {
                                         one number, one special character, and be at least 8 characters long.
                                     </p>
                                 )}
+                                
                             </div>
                         </div>
 
