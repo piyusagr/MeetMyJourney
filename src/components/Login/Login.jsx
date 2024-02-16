@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import Tilt from 'react-parallax-tilt';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 const Login = () => {
     const [email, setEmail] = useState("");
-    const [isEmailValid, setIsEmailValid] = useState(true);  // New state
+    const [isEmailValid, setIsEmailValid] = useState(true);
     const [password, setPassword] = useState("");
-    const [isPasswordValid, setIsPasswordValid] = useState(true);  // New state
+    const [isPasswordValid, setIsPasswordValid] = useState(true);
     const [visiblePassword, setVisiblePassword] = useState(false);
     const navigate = useNavigate();
-    const userData = JSON.parse(localStorage.getItem('user')) || {};
 
     const validateEmail = () => {
-        const isValid = email === userData.email;
+        const isValid = email.trim() !== "";
         setIsEmailValid(isValid);
         return isValid;
     };
@@ -23,23 +23,42 @@ const Login = () => {
     };
 
     const validatePassword = () => {
-        const isValid = password === userData.password;
+        const isValid = password.trim() !== "";
         setIsPasswordValid(isValid);
         return isValid;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const isEmailValid = validateEmail();
         const isPasswordValid = validatePassword();
 
         if (isEmailValid && isPasswordValid) {
-            console.log("Form submitted:", { email, password });
-            localStorage.setItem('user', JSON.stringify({ email, password }));
-            navigate("/main");
+            try {
+                const response = await fetch('http://localhost:8000/api/api/login/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': Cookies.get('csrftoken'),
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                if (response.ok) {
+                    console.log('Login successful');
+                    navigate("/main");
+                } else if (response.status === 400) {
+                    const data = await response.json();
+                    console.error('Login failed:', data.error);
+                } else {
+                    console.error('Login failed.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         } else {
-            console.log("Email or password not available");
+            console.log("Invalid email or password. Please check your input.");
         }
 
         setEmail("");
@@ -59,16 +78,18 @@ const Login = () => {
 
                 </div>
             </div>
-            <div className="App bg-sky-900 mt-[10vh] h-screen w-screen relative overflow-hidden flex justify-center items-center">
+            <div className="App bg-sky-900 mt-[8vh] h-screen w-screen relative overflow-hidden flex justify-center items-center">
                 <div className="h-40-r w-40-r bg-gradient-to-r from-green-400 to-blue-500 rounded-full absolute left-2/3 -top-56 transform rotate-160 animate-pulse"></div>
                 <div className="h-35-r w-35-r bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-full absolute top-96 -left-20 transform rotate-180 animate-pulse"></div>
                 <Tilt>
                     <div className="container h-96 w-96 bg-white bg-opacity-10 rounded-2xl shadow-5xl relative z-2 border border-opacity-30 border-r-0 border-b-0 backdrop-filter backdrop-blur-sm">
                         <form
                             className='h-full flex flex-col justify-evenly items-center'
+                            method="POST"
                             onSubmit={handleSubmit}
                         >
                             <div className='text-yellow-200 font-poppins text-2xl tracking-widest'>Login Form</div>
+                            <div>
                             <input
                                 type="email"
                                 value={email}
@@ -83,6 +104,7 @@ const Login = () => {
                             {!isEmailValid && (
                                 <p className="text-red-500 text-sm">  Email address not register.</p>
                             )}
+                            </div>
                             <div>
                                 <input
                                     type={visiblePassword ? "text" : "password"}
