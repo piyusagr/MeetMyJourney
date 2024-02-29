@@ -1,5 +1,5 @@
 
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
 
@@ -12,3 +12,6 @@ class Company(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     logo = models.URLField(null=True, blank=True)
+
+# class CustomerUser(AbstractUser):
+#     email = models.EmailField(unique=True)
