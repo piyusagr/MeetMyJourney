@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Tilt from 'react-parallax-tilt';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,29 @@ const Login = () => {
     const [isPasswordValid, setIsPasswordValid] = useState(true);
     const [visiblePassword, setVisiblePassword] = useState(false);
     const navigate = useNavigate();
+    // useEffect(() => {
+    //     const fetchUsers = async () => {
+    //         try {
+    //             const response = await fetch('http://localhost:8000/api/api/register', {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //             });
+
+    //             if (response.ok) {
+    //                 const data = await response.json();
+    //                 setRegisteredUsers(data);
+    //             } else {
+    //                 console.error('Failed to fetch registered users data.');
+    //             }
+    //         } catch (error) {
+    //             console.error('Error:', error);
+    //         }
+    //     };
+
+    //     fetchUsers();
+    // }, []); 
 
     const validateEmail = () => {
         const isValid = email.trim() !== "";
@@ -28,48 +51,29 @@ const Login = () => {
         return isValid;
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
-        const isEmailValid = validateEmail();
-        const isPasswordValid = validatePassword();
+   
+    const handleSubmit = () => {
+        // const user = registeredUsers.find(user => user.email === email && user.password === password);
 
-        if (isEmailValid && isPasswordValid) {
-            try {
-                const response = await fetch('http://localhost:8000/api/api/login/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': Cookies.get('csrftoken'),
-                    },
-                    body: JSON.stringify({ email, password }),
-                });
+        
+            console.log('Login successful');
+            navigate("/main");
+        // } else {
+        //     console.error('Login failed. Invalid email or password.');
+        //     // Handle invalid login
+        // }
 
-                if (response.ok) {
-                    console.log('Login successful');
-                    navigate("/main");
-                } else if (response.status === 400) {
-                    const data = await response.json();
-                    console.error('Login failed:', data.error);
-                } else {
-                    console.error('Login failed.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        } else {
-            console.log("Invalid email or password. Please check your input.");
-        }
-
+        // Clear form fields
         setEmail("");
         setPassword("");
     };
-
+    
     return (
         <>
             <div className='shadow-md w-full fixed top-0 left-0 bg-sky-900'>
                 <div className='items-center flex flex-row justify-between  py-4 md:px-10 px-7'>
-                    <div className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] text-gray-800'>
+                    <div className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] '>
                         <span className='text-3xl text-indigo-600 mr-1 pt-2'>
                             <ion-icon name="logo-ionic"></ion-icon>
                         </span>
@@ -110,14 +114,14 @@ const Login = () => {
                                     type={visiblePassword ? "text" : "password"}
                                     placeholder='password'
                                     value={password}
-                                    className='input-text rounded-lg px-2 py-1 w-[42vh] ml-[-5vh]'
+                                    className='input-text rounded-lg px-1 -mx-1 py-1 w-[32vh] '
                                     onChange={(e) => {
                                         setPassword(e.target.value);
                                         setIsPasswordValid(true);
                                     }}
                                     required
                                 />
-                                <span onClick={handleVisibility} className=" bg-white rounded-lg px-4 py-[1.08vh] mx-[-5vh]  items-center ">
+                                <span onClick={handleVisibility} className=" ml-[-4vh]  items-center ">
                                     {visiblePassword && password.length > 0 ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                                 </span>
 

@@ -4,8 +4,9 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 import './home.css';
 import { useNavigate } from "react-router-dom";
 import Tilt from 'react-parallax-tilt';
-import Cookies from 'js-cookie';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Cookies from "js-cookie";
 
 const Home = () => {
     const [name, setName] = useState("");
@@ -63,24 +64,68 @@ const Home = () => {
 
                 if (response.ok) {
                     console.log("Form submitted:", { name, email, password });
-                    localStorage.setItem('user', JSON.stringify({ name, email, password }));
-                    navigate("/login");
+                    toast.success('Signed Up! Check Your mail for Verification.. ', {
+                        position: "top-right",
+                        autoClose: true,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
                 }
-                 
-                else if(response.status==400){
-                    console.error("Email already exist");
-                    
+
+                else if (response.status == 400) {
+                    toast.warn('Email Already Exist!!', {
+                        position: "top-right",
+                        autoClose: true,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+
                 }
-                else{
-                    console.error('Registration failed.');
+                else {
+                    toast.error('Registration Failed!!', {
+                        position: "top-right",
+                        autoClose: true,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
                 }
             }
-            catch(error){
-                console.error('Error: ', error);
+            catch (error) {
+                toast.error('Registration Failed!!', {
+                    position: "top-right",
+                    autoClose: true,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });            
             }
         }
         else {
-            console.log("Invalid email or password. Please check your input.");
+            toast.error('Invalid Email or Password!', {
+                position: "top-right",
+                autoClose: true,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
         setName("")
         setEmail("")
@@ -200,7 +245,7 @@ const Home = () => {
                                         one number, one special character, and be at least 8 characters long.
                                     </p>
                                 )}
-                                
+
                             </div>
                         </div>
 
@@ -243,8 +288,8 @@ const Home = () => {
                     >
                         Sign In
                     </button>
-
                 </div>
+                <ToastContainer />
 
             </div>
         </>

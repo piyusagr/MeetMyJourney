@@ -2,11 +2,14 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+from decouple import config
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+    os.environ["EMAIL_HOST_USER"] = config('EMAIL_HOST_USER', default='')
+    os.environ["EMAIL_HOST_PASSWORD"] = config('EMAIL_HOST_PASSWORD', default='')
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

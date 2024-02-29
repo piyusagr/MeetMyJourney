@@ -9,15 +9,15 @@ const Header = () => {
         { name: "Home", link: "/main" },
         { name: "Company", link: "/company" },
     ];
-    const userData = JSON.parse(localStorage.getItem('user')) || {};
-    const [str,setStr]= useState("");
-    useEffect(()=>setStr(userData.email.substring(0,6)))
+    // const userData = JSON.parse(localStorage.getItem('user')) || {};
+    // const [str,setStr]= useState("");
+    // useEffect(()=>setStr(userData.email.substring(0,6)))
     let [open, setOpen] = useState(false);
     
     return (
         <div className='shadow-md w-full fixed top-0 left-0 bg-sky-950'>
             <div className='md:flex items-center justify-between  py-4 md:px-10 px-7'>
-                <div className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] text-gray-800'>
+                <div className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] '>
                     <span className='text-3xl text-indigo-600 mr-1 pt-2'>
                         <ion-icon name="logo-ionic"></ion-icon>
                     </span>
@@ -36,9 +36,9 @@ const Header = () => {
                             </li>
                         ))
                     }
-                    <Button className="uppercase">
+                    {/* <Button className="uppercase">
                         {str}
-                    </Button>
+                    </Button> */}
                 </ul>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Cookies from 'js-cookie';
+
 import axios from 'axios';
 
 const CompanyForm = ({ addCompany }) => {
@@ -43,7 +43,7 @@ const CompanyForm = ({ addCompany }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    'X-CSRFToken': Cookies.get('csrftoken'),
+                    // 'X-CSRFToken': Cookies.get('csrftoken'),
                 },
                 body: JSON.stringify({ name, description, logo: Logourl}),
             });
@@ -65,7 +65,7 @@ const CompanyForm = ({ addCompany }) => {
     return (
         <div className="text-white py-10 bg-sky-900 ">
             <div className="border w-50  mx-10 my-20 pb-10 rounded-2xl">
-                <p className="mt-[-1rem] ml-8 px-3 md:ml-[30rem] w-70 align-center text-center  absolute uppercase text-center text-2xl font-extrabold bg-sky-900">Company Details</p>
+                <p className="mt-[-1rem] ml-8 px-3 md:ml-[30rem] w-70 align-center text-center  absolute uppercase  text-2xl font-extrabold bg-sky-900">Company Details</p>
                 <form className="flex flex-col" onSubmit={handleSubmit} method="POST">
                     <div className="flex flex-col md:flex-row text-center mt-10 text-xl ">
                         <label htmlFor="companyname" className="md:ml-[15rem] mt-4">Company Name :</label>
@@ -88,7 +88,7 @@ const CompanyForm = ({ addCompany }) => {
                             placeholder="enter company description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            required
+                            
                         />
                     </div>
                     <div className="flex flex-col md:flex-row text-center mt-3 text-xl">
