@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect,useRef } from "react";
 import CompanyForm from "./CompanyForm";
 import CompanyCard from "./CompanyCard";
 
 
 const Company = () => {
     const [details, setDetails] = useState([]);
-    // const [showForm, setShowForm] = useState(false);
+    const formRef = useRef();
 
-    // const navigate = useNavigate();
     useEffect(() => {
         fetchCompanies();
     }, []);
@@ -19,6 +17,8 @@ const Company = () => {
             if (response.ok) {
                 const data = await response.json();
                 setDetails(data);
+                
+
             } else {
                 console.error("Failed to fetch companies");
             }
@@ -45,15 +45,23 @@ const Company = () => {
         }
         return rows;
     };
-
+    const handleAddCompanyClick = () => {
+        formRef.current.scrollIntoView({ behavior: "smooth" });
+    };
     return (
         <div className="bg-sky-900 pt-[7rem] pb-[4rem] text-center text-3xl text-white">
-            <p className="uppercase">Company</p>
+            
+            <p className="uppercase px-20 pb-5">Company
             <div className="flex justify-center items-center mt-4">
                 <hr className="w-[8rem]" />
-            </div>
+            </div></p>
+            <div className="text-right mr-10 md:mr-64">
+            <button className="border p-2 rounded-2xl bg-white text-sky-800 font-bold uppercase text-sm align-end justify-end items-end justify-end" onClick={handleAddCompanyClick}>Add Company</button>
+          </div>
             {renderCompanyCards()}
-            <CompanyForm addCompany={addCompany} />
+            <div ref={formRef}>
+                <CompanyForm addCompany={addCompany} />
+            </div>
         </div>
     );
 };

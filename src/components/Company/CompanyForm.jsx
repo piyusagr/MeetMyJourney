@@ -1,25 +1,26 @@
 import React, { useState } from "react";
-
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CompanyForm = ({ addCompany }) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [Logourl, setLogourl]= useState("");
-    
+    const [Logourl, setLogourl] = useState("");
+
     const fetchLogo = async (companyName) => {
         try {
             const response = await axios.get(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${companyName}`);
             console.log(response.data);
-    
+
             if (response.data.length > 0) {
                 const companyData = response.data[0];
                 console.log("Company Data:", companyData);
-    
+
                 if (companyData.logo) {
                     console.log("Setting Logo URL:", companyData.logo);
                     setLogourl(companyData.logo);
-    
+
                     console.log("Updated Logo State:", Logourl);
                 } else {
                     console.error("No logo found in the API response");
@@ -31,7 +32,7 @@ const CompanyForm = ({ addCompany }) => {
             console.error("Error fetching logo:", error);
         }
     };
-    
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,21 +46,52 @@ const CompanyForm = ({ addCompany }) => {
                     "Content-Type": "application/json",
                     // 'X-CSRFToken': Cookies.get('csrftoken'),
                 },
-                body: JSON.stringify({ name, description, logo: Logourl}),
+                body: JSON.stringify({ name, description, logo: Logourl }),
             });
 
             if (response.ok) {
                 const data = await response.json();
                 console.log(data.logo)
                 addCompany(data);
-                setName("");
-                setDescription("");
-                setLogourl("");
+                toast.success('Company Added', {
+                    position: "top-right",
+                    autoClose: true,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+
             } else {
                 console.error("Failed to add company");
+                toast.warn('Company Already Listed', {
+                    position: "top-right",
+                    autoClose: true,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
+            setName("");
+            setDescription("");
+            setLogourl("");
         } catch (error) {
             console.error("Error:", error);
+            toast.warn("Failed To Add", {
+                position: "top-right",
+                autoClose: true,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
     };
     return (
@@ -88,7 +120,7 @@ const CompanyForm = ({ addCompany }) => {
                             placeholder="enter company description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            
+
                         />
                     </div>
                     <div className="flex flex-col md:flex-row text-center mt-3 text-xl">
@@ -99,12 +131,13 @@ const CompanyForm = ({ addCompany }) => {
                             placeholder="company logo"
                             value={Logourl}
                             onChange={fetchLogo(name)}
-                            
+
                         />
                     </div>
                     <button className="align-center text-center justify-center rounded-3xl border-6 p-2 ml-[6rem] sm:ml-[15rem] md:ml-[30rem] mt-6 bg-white text-sky-950 font-bold w-20 text-xl" type="submit">Submit</button>
                 </form>
             </div>
+            <ToastContainer className="text-xl" />
         </div>
     )
 }

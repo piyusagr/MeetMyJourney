@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Tilt from 'react-parallax-tilt';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
+import axios from "axios";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -11,29 +11,7 @@ const Login = () => {
     const [isPasswordValid, setIsPasswordValid] = useState(true);
     const [visiblePassword, setVisiblePassword] = useState(false);
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     const fetchUsers = async () => {
-    //         try {
-    //             const response = await fetch('http://localhost:8000/api/api/register', {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //             });
-
-    //             if (response.ok) {
-    //                 const data = await response.json();
-    //                 setRegisteredUsers(data);
-    //             } else {
-    //                 console.error('Failed to fetch registered users data.');
-    //             }
-    //         } catch (error) {
-    //             console.error('Error:', error);
-    //         }
-    //     };
-
-    //     fetchUsers();
-    // }, []); 
+    
 
     const validateEmail = () => {
         const isValid = email.trim() !== "";
@@ -53,20 +31,32 @@ const Login = () => {
 
 
    
-    const handleSubmit = () => {
-        // const user = registeredUsers.find(user => user.email === email && user.password === password);
+    const handleSubmit = async () => {
+        const isEmailValid = validateEmail();
+        const isPasswordValid = validatePassword();
 
-        
-            console.log('Login successful');
-            navigate("/main");
-        // } else {
-        //     console.error('Login failed. Invalid email or password.');
-        //     // Handle invalid login
-        // }
+        if (isEmailValid && isPasswordValid) {
+            try {
+                const response = await axios.post('http://localhost:8000/api/api/login/', {
+                    email,
+                    password,
+                });
 
-        // Clear form fields
-        setEmail("");
-        setPassword("");
+                if (response.data.success) {
+                    console.log('Login successful');
+
+                    navigate("/main");
+                } else {
+                    console.error('Login failed. Invalid email or password.');
+                }
+            } catch (error) {
+                console.error('An error occurred during login:', error);
+            }
+
+            // Clear form fields
+            setEmail("");
+            setPassword("");
+        }
     };
     
     return (

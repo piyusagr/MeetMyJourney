@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // {`/company/${encodeURIComponent(name)}/interviewexperience/${encodeURIComponent(profile)}`}
-const InterviewExperienceCard = ()=>{//{name,profile,body,user}) => {
+const InterviewExperienceCard = ({name,profile,body,user}) => {
     return (
         <Link to="#" className="text-lg text-blue-500 mx-10 hover:text-blue-700" >
             <div className="bg-white align-middle text-sky-700 rounded-2xl  justify-between  p-7 mb-11 shadow-md w-[20rem] mr-6 h-80">

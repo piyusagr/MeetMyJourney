@@ -73,6 +73,7 @@ const Home = () => {
                         draggable: true,
                         progress: undefined,
                         theme: "colored",
+                        onClose: navigate(`/verify/${email}`),
                     });
                 }
 

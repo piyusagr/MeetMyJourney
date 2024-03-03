@@ -15,13 +15,12 @@ const router = createBrowserRouter(
     <>
       <Route path='/' element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/verify/:id" element={<VerificationPage/>}/>
+      <Route path="/verify/:email" element={<VerificationPage/>}/>
       <Route path='/' element={<Layout />}>
         <Route path='main' element={<Main />} />
         <Route path="company" element={<Company />} />
         <Route path="companydetail/form" element={<CompanyForm />} />
         <Route path="/company/:companyName" element={<InterviewExperience/>} />
-
       </Route>
     </>
   )
