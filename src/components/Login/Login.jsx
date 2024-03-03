@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import Tilt from 'react-parallax-tilt';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import Cookies from "js-cookie";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -11,7 +13,7 @@ const Login = () => {
     const [isPasswordValid, setIsPasswordValid] = useState(true);
     const [visiblePassword, setVisiblePassword] = useState(false);
     const navigate = useNavigate();
-    
+
 
     const validateEmail = () => {
         const isValid = email.trim() !== "";
@@ -30,35 +32,92 @@ const Login = () => {
     };
 
 
-   
-    const handleSubmit = async () => {
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         const isEmailValid = validateEmail();
         const isPasswordValid = validatePassword();
 
         if (isEmailValid && isPasswordValid) {
             try {
-                const response = await axios.post('http://localhost:8000/api/api/login/', {
-                    email,
-                    password,
+                const csrftoken = Cookies.get('csrftoken');
+
+                const response = await fetch("http://localhost:8000/api/api/login/", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify({ email: email, password: password }),
                 });
 
-                if (response.data.success) {
-                    console.log('Login successful');
+                const responseData = await response.json();
 
-                    navigate("/main");
+                if (responseData.success) {
+                    console.log('Login successful');
+                    toast.success('Logged In Successfully', {
+                        position: "top-right",
+                        autoClose: false,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                        onclose: navigate("/main"),
+                    });
+    
                 } else {
-                    console.error('Login failed. Invalid email or password.');
+                    console.error('Login failed:', responseData.error);
+
+                    if (response.status === 403) {
+                        console.log("email not  evrified");
+                        toast.warn('Email yet to verify', {
+                            position: "top-right",
+                            autoClose: true,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }
+                    else if (response.status===402){
+                        console.log("Wrong Password");
+                        toast.warn('Incorrect Password', {
+                            position: "top-right",
+                            autoClose: true,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }
+                    else {
+                        console.log("invalid email/password")
+                        toast.warn("Email not register", {
+                            position: "top-right",
+                            autoClose: true,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }
                 }
             } catch (error) {
                 console.error('An error occurred during login:', error);
             }
 
-            // Clear form fields
             setEmail("");
             setPassword("");
         }
     };
-    
     return (
         <>
             <div className='shadow-md w-full fixed top-0 left-0 bg-sky-900'>
@@ -84,20 +143,20 @@ const Login = () => {
                         >
                             <div className='text-yellow-200 font-poppins text-2xl tracking-widest'>Login Form</div>
                             <div>
-                            <input
-                                type="email"
-                                value={email}
-                                placeholder='email'
-                                className='input-text rounded-lg pl-2 py-1 w-60 '
-                                onChange={(e) => {
-                                    setEmail(e.target.value);
-                                    setIsEmailValid(true);
-                                }}
-                                required
-                            />
-                            {!isEmailValid && (
-                                <p className="text-red-500 text-sm">  Email address not register.</p>
-                            )}
+                                <input
+                                    type="email"
+                                    value={email}
+                                    placeholder='email'
+                                    className='input-text rounded-lg pl-2 py-1 w-60 '
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                        setIsEmailValid(true);
+                                    }}
+                                    required
+                                />
+                                {!isEmailValid && (
+                                    <p className="text-red-500 text-sm">  Email address not register.</p>
+                                )}
                             </div>
                             <div>
                                 <input
@@ -125,6 +184,8 @@ const Login = () => {
                         </form>
                     </div>
                 </Tilt>
+                <ToastContainer className="text-xl" />
+
             </div>
         </>
     );

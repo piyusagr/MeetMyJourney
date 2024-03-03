@@ -31,10 +31,10 @@ const VerificationPage = () => {
                 console.log("Failed to verify code email.");
             }
 
-            setVerificationcode("");
         } catch (error) {
             console.error("Failed to verify email:", error);
         }
+        setVerificationcode("");
     };
 
     return (

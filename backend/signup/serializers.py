@@ -13,7 +13,6 @@ class CompanySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class InterviewExperienceSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = InterviewExperience
         fields = '__all__'
