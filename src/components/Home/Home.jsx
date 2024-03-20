@@ -143,7 +143,7 @@ const Home = () => {
         <>
             <div className='shadow-md w-full fixed top-0 left-0 bg-sky-950'>
                 <div className='items-center flex flex-row justify-between  py-4 md:px-10 px-7'>
-                    <div className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] text-gray-800'>
+                    <div className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] '>
                         <span className='text-3xl text-sky-600 mr-1 pt-2'>
                             <ion-icon name="logo-ionic"></ion-icon>
                         </span>
@@ -176,7 +176,7 @@ const Home = () => {
 
 
 
-                <div className="border border-spacing-36 border-opacity-30 border-r-0 border-b-0 backdrop-filter backdrop-blur-sm md:ml-[45vh] py-5 mb-10 mt-[-30vh] md:mt-[-22vh] py-5 rounded-2xl md:w-[120vh]  items-center text-center">
+                <div className="border border-spacing-36 border-opacity-30 border-r-0 border-b-0 backdrop-filter backdrop-blur-sm md:ml-[45vh]  mb-10 mt-[-30vh] md:mt-[-22vh] py-5 rounded-2xl md:w-[120vh]  items-center text-center">
                     <form
                         method="POST"
                         className="px-5 mx-5  text-l   text-center justify-center items-center  text-yellow-950 md:text-xl"
@@ -276,7 +276,7 @@ const Home = () => {
                         </div>
                         <button
                             type="submit"
-                            className="bg-yellow-400 font-extrabold text-indigo-700 rounded-full px-6 py-2 mt-4 border px-5 justify-between items-center"
+                            className="bg-yellow-400 font-extrabold text-indigo-700 rounded-full px-6 py-2 mt-4 border justify-between items-center"
                         >
                             Sign Up
                         </button>
@@ -284,7 +284,7 @@ const Home = () => {
                     <p className="font-bold text-lg text-white pt-4">OR</p>
                     <button
                         type="submit"
-                        className="bg-yellow-400 font-extrabold text-indigo-700 rounded-full px-6 py-2 mt-4 border px-5 justify-between items-center"
+                        className="bg-yellow-400 font-extrabold text-indigo-700 rounded-full px-6 py-2 mt-4 border justify-between items-center"
                         onClick={handleSignIn}
                     >
                         Sign In

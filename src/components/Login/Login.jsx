@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Link} from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -179,6 +180,11 @@ const Login = () => {
                                         Wrong Password
                                     </p>
                                 )}
+                            </div>
+                            <div className=" text-yellow-400 text-lg">
+                                <Link to="/forget-password" className= "text-center">
+                                    Forget Password
+                                </Link>
                             </div>
                             <input type="Submit" className='cursor-pointer text-sky-200  font-poppins rounded-full px-5 py-1 bg-white bg-opacity-50 hover:bg-white hover:bg-opacity-80 ' value="Sign in" />
                         </form>

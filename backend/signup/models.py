@@ -15,16 +15,18 @@ class Company(models.Model):
     description = models.TextField(null=True, blank=True)
     logo = models.URLField(null=True, blank=True)
 
-class InterviewExperience(models.Model):
-    companyName = models.CharField(max_length=255, default="")
+class Interview(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     profile_name = models.CharField(max_length=255)
     application = models.TextField()
     interview_process = models.TextField()
-    interview_questions = models.TextField()
+    interview_question = models.TextField()
     offer = models.BooleanField(default=False)
     easy = models.BooleanField(default=False)
     medium = models.BooleanField(default=False)
     hard = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"{self.profile_name} - {self.company.name}"
    
    

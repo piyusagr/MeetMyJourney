@@ -9,6 +9,8 @@ import Login from './components/Login/Login.jsx'
 import CompanyForm from './components/Company/CompanyForm.jsx'
 import InterviewExperience from './components/Interview/InterviewExperience.jsx';
 import VerificationPage from './components/verify/EmailVerification.jsx'
+import ForgetPassword from './components/forget/Forgetpassword.jsx'
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +18,7 @@ const router = createBrowserRouter(
       <Route path='/' element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/verify/:email" element={<VerificationPage/>}/>
+      <Route path="/forget-password" element={<ForgetPassword/>}/>
       <Route path='/' element={<Layout />}>
         <Route path='main' element={<Main />} />
         <Route path="company" element={<Company />} />

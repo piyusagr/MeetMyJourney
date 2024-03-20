@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import '/src/Output.css';
-import Button from './Button';
+// import Button from './Button';
 
 
 const Header = () => {
@@ -9,11 +9,7 @@ const Header = () => {
         { name: "Home", link: "/main" },
         { name: "Company", link: "/company" },
     ];
-    // const userData = JSON.parse(localStorage.getItem('user')) || {};
-    // const [str,setStr]= useState("");
-    // useEffect(()=>setStr(userData.email.substring(0,6)))
     let [open, setOpen] = useState(false);
-    
     return (
         <div className='shadow-md w-full fixed top-0 left-0 bg-sky-950'>
             <div className='md:flex items-center justify-between  py-4 md:px-10 px-7'>
@@ -36,9 +32,7 @@ const Header = () => {
                             </li>
                         ))
                     }
-                    {/* <Button className="uppercase">
-                        {str}
-                    </Button> */}
+
                 </ul>
             </div>
         </div>
