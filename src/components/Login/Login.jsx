@@ -146,11 +146,11 @@ const Login = () => {
                             <div>
                                 <input
                                     type="email"
-                                    value={email}
+                                    value={email.toLowerCase()}
                                     placeholder='email'
                                     className='input-text rounded-lg pl-2 py-1 w-60 '
                                     onChange={(e) => {
-                                        setEmail(e.target.value);
+                                        setEmail(e.target.value.toLowerCase());
                                         setIsEmailValid(true);
                                     }}
                                     required

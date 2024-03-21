@@ -206,11 +206,11 @@ const Home = () => {
                                 <input
                                     type="email"
                                     className={`rounded-full px-4 py-2 ${isEmailValid ? "" : "border-red-500"}`}
-                                    value={email}
+                                    value={email.toLowerCase()}
                                     name="mail"
                                     placeholder="Enter the email"
                                     onChange={(e) => {
-                                        setEmail(e.target.value);
+                                        setEmail(e.target.value.toLowerCase());
                                         setIsEmailValid(true);
                                     }}
                                     required

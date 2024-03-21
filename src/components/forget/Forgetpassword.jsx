@@ -1,10 +1,12 @@
 import {useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
 
 export default function ForgetPassword() {
     const [email, setEmail] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(true);
+    const navigate=useNavigate()
     const validateEmail = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValid = emailRegex.test(email);
@@ -17,7 +19,7 @@ export default function ForgetPassword() {
 
         if (isEmailValid) {
             try {
-                const response = await fetch('http://localhost:8000/api/api/forgetpassword/', {
+                const response = await fetch('http://127.0.0.1:8000/api/api/forget-password', {
                     method: 'POST',
                     headers: {
                         'content-Type': 'application/json',
@@ -25,7 +27,12 @@ export default function ForgetPassword() {
                     },
                     body: JSON.stringify({email}),
                 });
-                console.log("email valid: ", {email})
+                if (response.ok) {
+                    console.log("Password reset email sent successfully.");
+                    navigate(`/verify/${email}`)
+                } else {
+                    console.error("Failed to send password reset email.");
+                }
             }
             catch (error){
                 console.log(error)
@@ -50,11 +57,11 @@ export default function ForgetPassword() {
                     </label>
                     <input
                         type="text"
-                        value={email}
+                        value={email.toLowerCase()}
                         name="email"
                         placeholder="Enter the email"
                         className="rise-2 my-6 rounded-xl p-2 w-52 justify-center text-center text-sky-800"
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value.toLowerCase())}
                         required
                     />
                     {!isEmailValid && (

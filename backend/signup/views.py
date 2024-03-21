@@ -120,3 +120,28 @@ def create_interview(request, company_name):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
     return Response({'error': 'Invalid request method'}, status=400)
+
+@api_view(['POST'])
+@csrf_exempt
+@permission_classes([AllowAny])
+def forget_password(request):
+    if request.method == 'POST':
+        email = request.data.get('email')
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+
+        verification_token = generate_verification_token()
+        user.verification_token = verification_token
+        user.is_verified=False
+        user.save()
+        send_mail(
+            'Password Reset',
+            f"Verification code for password reset: {verification_token}",
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
