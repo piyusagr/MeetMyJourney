@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import InterviewExperience, User, Company
+from .models import Interview, User, Company
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,5 +14,5 @@ class CompanySerializer(serializers.ModelSerializer):
 
 class InterviewExperienceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = InterviewExperience
+        model = Interview
         fields = '__all__'

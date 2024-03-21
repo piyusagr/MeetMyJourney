@@ -1,16 +1,15 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import User, Company, InterviewExperience
+from .models import User, Company, Interview
 from .serializers import UserSerializer, CompanySerializer, InterviewExperienceSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from .utils import generate_verification_token
 from django.core.mail import send_mail
-from django.http import JsonResponse
 from django.conf import settings
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from django.contrib.auth import authenticate, login
+from rest_framework.decorators import api_view, permission_classes,authentication_classes
+from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
 
 @permission_classes([AllowAny])
@@ -86,7 +85,63 @@ class CompanyListCreateView(generics.ListCreateAPIView):
     serializer_class = CompanySerializer
     print(Company.logo)
 
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
+# @api_view(['POST'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@api_view(['POST'])
+@csrf_exempt
+
+def create_interview(request, company_name):
+    if request.method == 'POST':
+
+        try:
+            company = Company.objects.get(name=company_name)
+        except Company.DoesNotExist:
+            return Response({'error': 'Company not found'}, status=404)
+
+        data = {
+            'company': company.id,
+            'profile_name': request.data.get('profilename'),
+            'application': request.data.get('application'),
+            'interview_process': request.data.get('interview'),
+            'interview_question': request.data.get('interviewquestion'),
+            'offer': request.data.get('offer', False),
+            'easy': request.data.get('easy', False),
+            'medium': request.data.get('medium', False),
+            'hard': request.data.get('hard', False),
+        }
+
+        serializer = InterviewExperienceSerializer(data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+    return Response({'error': 'Invalid request method'}, status=400)
+
+@api_view(['POST'])
+@csrf_exempt
 @permission_classes([AllowAny])
-class InterviewExperienceListCreateView(generics.ListCreateAPIView):
-    queryset = InterviewExperience.objects.all()
-    serializer_class = InterviewExperienceSerializer
+def forget_password(request):
+    if request.method == 'POST':
+        email = request.data.get('email')
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+
+        verification_token = generate_verification_token()
+        user.verification_token = verification_token
+        user.is_verified=False
+        user.save()
+        send_mail(
+            'Password Reset',
+            f"Verification code for password reset: {verification_token}",
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
