@@ -10,6 +10,8 @@ import CompanyForm from './components/Company/CompanyForm.jsx'
 import InterviewExperience from './components/Interview/InterviewExperience.jsx';
 import VerificationPage from './components/verify/EmailVerification.jsx'
 import ForgetPassword from './components/forget/Forgetpassword.jsx'
+import VerificationForget from "./components/forget/VerifyForget.jsx";
+import NewPassword from "./components/forget/NewPassword.jsx";
 
 
 const router = createBrowserRouter(
@@ -19,6 +21,8 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/verify/:email" element={<VerificationPage/>}/>
       <Route path="/forget-password" element={<ForgetPassword/>}/>
+      <Route path="/verify-forget/:email" element={<VerificationForget/>}/>
+      <Route path="/new-password/:email" element={<NewPassword/>}/>
       <Route path='/' element={<Layout />}>
         <Route path='main' element={<Main />} />
         <Route path="company" element={<Company />} />

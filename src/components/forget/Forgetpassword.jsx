@@ -29,7 +29,7 @@ export default function ForgetPassword() {
                 });
                 if (response.ok) {
                     console.log("Password reset email sent successfully.");
-                    navigate(`/verify/${email}`)
+                    navigate(`/verify-forget/${email}`)
                 } else {
                     console.error("Failed to send password reset email.");
                 }

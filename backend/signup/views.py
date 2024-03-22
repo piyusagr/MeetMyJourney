@@ -130,7 +130,7 @@ def forget_password(request):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            return JsonResponse({'error': 'User not found'}, status=404)
+            return Response({'error': 'User not found'}, status=404)
 
         verification_token = generate_verification_token()
         user.verification_token = verification_token
@@ -144,4 +144,22 @@ def forget_password(request):
             fail_silently=False,
         )
         return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@csrf_exempt
+@permission_classes([AllowAny])
+def new_password(request):
+    if request.method=='POST':
+        email=request.data.get('email')
+        password=request.data.get('password')
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=404)
+
+        if user.is_verified:
+            user.password=password
+            user.save()
+            return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
