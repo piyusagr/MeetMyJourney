@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState} from "react";
 import Cookies from "js-cookie";
 import { useParams, useNavigate } from "react-router-dom";
 
-const VerificationPage = () => {
+const VerificationForget = () => {
     const [verificationcode, setVerificationcode] = useState("");
     const { email } = useParams();
     const navigate = useNavigate();
- console.log(email);
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -23,7 +22,7 @@ const VerificationPage = () => {
 
             if (response.status === 200) {
                 console.log("Email successfully verified.");
-                navigate('/login');
+                navigate(`/new-password/${email}`);
             } else {
                 console.log("Failed to verify code email.");
             }
@@ -76,4 +75,4 @@ const VerificationPage = () => {
     );
 };
 
-export default VerificationPage;
+export default VerificationForget;
