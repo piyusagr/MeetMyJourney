@@ -2,7 +2,9 @@ import {useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import coloredlogomain from "../../../public/coloredlogomain.png";
 export default function ForgetPassword() {
     const [email, setEmail] = useState("");
     const [isEmailValid, setIsEmailValid] = useState(true);
@@ -28,28 +30,69 @@ export default function ForgetPassword() {
                     body: JSON.stringify({email}),
                 });
                 if (response.ok) {
-                    console.log("Password reset email sent successfully.");
-                    navigate(`/verify-forget/${email}`)
+                    toast.success('Password reset email vertifiction sent successfully ! ', {
+                        position: "top-right",
+                        autoClose: true,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                        onClose: () => navigate(`/verify-forget/${email}`),
+                    });
                 } else {
-                    console.error("Failed to send password reset email.");
+                    toast.error('Email not registered!!', {
+                        position: "top-right",
+                        autoClose: true,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
                 }
-            }
-            catch (error){
-                console.log(error)
+            } catch (error) {
+                toast.error('not able to fetch backend!', {
+                    position: "top-right",
+                    autoClose: true,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }
         }
         else{
-            console.log("enter valid email!!!")
+            toast.error('Enter valid email id!', {
+                position: "top-right",
+                autoClose: true,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
         setEmail("")
     }
 
     return (
         <div className="justify-center min-h-screen">
-            <nav className="bg-sky-900 text-xl text-left font-bold text-yellow-400 w-full h-15 p-3">
-                <Link to="/">Logo</Link>
+            <nav className="bg-sky-900 text-xl text-left font-bold text-yellow-400 w-full h-20  shadow-md p-3">
+                <Link to="/">
+                     <span className='text-3xl text-indigo-600 mr-1 pt-2'>
+                        <img src={coloredlogomain} alt="Logo" className="rounded-full rise-2 shadow-8xl w-20 h-16"
+                             width={40} height={40}/>
+                    </span>
+                </Link>
             </nav>
-            <form  method="POST" onSubmit={handleSubmit} className="bg-sky-800 py-32 w-full h-full font-bold text-yellow-500 text-center">
+            <form method="POST" onSubmit={handleSubmit}
+                  className="bg-sky-800 py-32 w-full min-h-screen font-bold text-yellow-500 text-center">
                 <p className="text-xl uppercase">Forgot password</p>
                 <div className="mt-8 grid grid-col-1 text-center justify-center">
                     <label className="text-lg" htmlFor="email">
@@ -75,6 +118,7 @@ export default function ForgetPassword() {
                     Submit
                 </button>
             </form>
+            <ToastContainer/>
         </div>
     );
 }

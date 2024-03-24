@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import Tilt from 'react-parallax-tilt';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from "react-router-dom";
+import coloredlogomain from "../../../public/coloredlogomain.png";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -65,14 +66,14 @@ const Login = () => {
                         draggable: true,
                         progress: undefined,
                         theme: "colored",
-                        onclose: navigate("/main"),
+                        onClose: ()=>navigate("/main"),
                     });
     
                 } else {
                     console.error('Login failed:', responseData.error);
 
                     if (response.status === 403) {
-                        console.log("email not  evrified");
+                        console.log("email not verified");
                         toast.warn('Email yet to verify', {
                             position: "top-right",
                             autoClose: true,
@@ -120,20 +121,23 @@ const Login = () => {
         }
     };
     return (
-        <>
-            <div className='shadow-md w-full fixed top-0 left-0 bg-sky-900'>
+        <div>
+            <nav className='shadow-md w-screen min-h-full fixed top-0 left-0 bg-sky-900'>
                 <div className='items-center flex flex-row justify-between  py-4 md:px-10 px-7'>
-                    <div className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] '>
-                        <span className='text-3xl text-indigo-600 mr-1 pt-2'>
-                            <ion-icon name="logo-ionic"></ion-icon>
-                        </span>
-                        Logo
+                    <div
+                        className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] '>
+                         <span className='text-3xl text-indigo-600 mr-1 pt-2'>
+                            <img src={coloredlogomain} alt="Logo" className="rounded-full rise-2 shadow-8xl w-20 h-12"
+                                 width={40} height={40}/>
+                         </span>
                     </div>
 
                 </div>
-            </div>
-            <div className="App bg-sky-900 mt-[8vh] h-screen w-screen relative overflow-hidden flex justify-center items-center">
-                <div className="h-40-r w-40-r bg-gradient-to-r from-green-400 to-blue-500 rounded-full absolute left-2/3 -top-56 transform rotate-160 animate-pulse"></div>
+            </nav>
+            <div
+                className="App bg-sky-900 mt-[8vh] min-h-screen w-screen relative overflow-hidden flex justify-center items-center">
+                <div
+                    className="h-40-r w-40-r bg-gradient-to-r from-green-400 to-blue-500 rounded-full absolute left-2/3 -top-56 transform rotate-160 animate-pulse"></div>
                 <div className="h-35-r w-35-r bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-full absolute top-96 -left-20 transform rotate-180 animate-pulse"></div>
                 <Tilt>
                     <div className="container h-96 w-96 bg-white bg-opacity-10 rounded-2xl shadow-5xl relative z-2 border border-opacity-30 border-r-0 border-b-0 backdrop-filter backdrop-blur-sm">
@@ -193,7 +197,7 @@ const Login = () => {
                 <ToastContainer className="text-xl" />
 
             </div>
-        </>
+        </div>
     );
 
 }

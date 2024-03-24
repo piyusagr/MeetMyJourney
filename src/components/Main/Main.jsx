@@ -48,13 +48,13 @@ const Main = () => {
 
     return (
         <div className="bg-sky-900">
-            <div className="bg-sky-900 flex flex-col md:flex-row h-full w-full px-10 py-10  text-yellow-300">
+            <div className="bg-sky-900 grid grid-cols-1 md:grid-cols-2 md:flex-row h-full w-[calc(100vm-10vh)] px-10 py-10  text-yellow-300">
                 <div
-                    className="font-bold flex-col flex text-lg md:text-2xl text-center sm:w-[150vh]  px-7 pt-7"
+                    className="font-bold  grid grid-cols-1  text-lg md:text-2xl text-center w-150 md:w-120   pt-7"
                 >
-                    <h1 className="text-2xl md:text-4xl pb-4 pt-8 font-extrabold">Welcome to Website</h1>
-                    <p className="text-white font-semibold pb-3">Unlock Your Career Potential with Seamless Interview Experience</p>
-                    <p className="text-white font-bold py-2">Embark on a journey of career growth and success. We understand that the interview process is a crucial step in achieving your professional aspirations. That's why we've crafted an innovative platform to enhance and simplify your interview experiences.</p>
+                    <h1 className="text-2xl md:text-4xl  pt-28 font-extrabold">Welcome to MeetMyJourney</h1>
+                    <p className="text-white font-semibold ">Unlock Your Career Potential with Seamless Interview Experience</p>
+                    <p className="text-white font-bold md:-mt-16 ">Embark on a journey of career growth and success. We understand that the interview process is a crucial step in achieving your professional aspirations. That's why we've crafted an innovative platform to enhance and simplify your interview experiences.</p>
                 </div>
                 <div className="overflow-hidden relative items-center text-center justify-center pl-5 ">
                     <img

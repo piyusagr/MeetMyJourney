@@ -7,6 +7,7 @@ import Tilt from 'react-parallax-tilt';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from "js-cookie";
+import coloredlogomain from "../../../public/coloredlogomain.png";
 
 const Home = () => {
     const [name, setName] = useState("");
@@ -73,7 +74,7 @@ const Home = () => {
                         draggable: true,
                         progress: undefined,
                         theme: "colored",
-                        onClose: navigate(`/verify/${email}`),
+                        onClose: ()=>navigate(`/verify/${email}`),
                     });
                 }
 
@@ -141,19 +142,21 @@ const Home = () => {
 
     return (
         <>
-            <div className='shadow-md w-full fixed top-0 left-0 bg-sky-950'>
+            <div className='shadow-md w-full fixed top-0 left-0 bg-sky-900'>
                 <div className='items-center flex flex-row justify-between  py-4 md:px-10 px-7'>
-                    <div className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] '>
-                        <span className='text-3xl text-sky-600 mr-1 pt-2'>
-                            <ion-icon name="logo-ionic"></ion-icon>
-                        </span>
-                        Logo
+                    <div
+                        className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] '>
+                         <span className='text-3xl text-indigo-600 mr-1 pt-2'>
+                            <img src={coloredlogomain} alt="Logo" className="rounded-full rise-2 shadow-8xl w-20 h-12"
+                                 width={40} height={40}/>
+                         </span>
                     </div>
 
                 </div>
             </div>
             <div className="flex flex-col bg-sky-900 px-4 w-full">
-                <div className="flex flex-col md:flex-row items-start justify-between w-full h-full bg-sky-900 px-5 py-[20vh]">
+                <div
+                    className="flex flex-col md:flex-row items-start justify-between w-full h-full bg-sky-900 px-5 py-[20vh]">
                     <div
                         className="font-bold flex-col flex text-lg md:text-2xl text-center sm:w-[120vh]  px-6"
                     >

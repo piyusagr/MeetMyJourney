@@ -1,7 +1,10 @@
-import React, {useState} from "react";
+import  {useState} from "react";
 import { Eye, EyeOff } from 'lucide-react';
 import Cookies from "js-cookie";
 import {useNavigate, useParams} from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import coloredlogomain from "../../../public/coloredlogomain.png";
 
 export default function NewPassword(){
     const [password, setPassword]=useState("")
@@ -45,20 +48,53 @@ export default function NewPassword(){
                     body: JSON.stringify({email,password}),
                 });
                 if (response.ok){
-                    console.log("password updated")
-                    navigate('/login')
+                    toast.success('Password Updated! ', {
+                        position: "top-right",
+                        autoClose: true,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                        onClose: () => navigate(`/login`),
+                    });
                 }
                 else{
-                    console.log("email not verified")
-                }
+                    toast.error('Email Not Verified Yet! ', {
+                        position: "top-right",
+                        autoClose: true,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });                }
             }
             catch (error) {
-                console.log(error)
-            }
+                toast.error('Email Not Registered  Yet! ', {
+                    position: "top-right",
+                    autoClose: true,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });              }
         }
         else{
-            console.log("password didnt match")
-        }
+            toast.error("Password didn't match!", {
+                position: "top-right",
+                autoClose: true,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });          }
         setPassword("")
         setConfirm("")
         setIsVisible(false)
@@ -72,14 +108,15 @@ export default function NewPassword(){
                 <div className='items-center flex flex-row justify-between  py-4 md:px-10 px-7'>
                     <div
                         className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] '>
-                        <span className='text-3xl text-indigo-600 mr-1 pt-2'>
-                            <ion-icon name="logo-ionic"></ion-icon>
-                        </span>
-                        Logo
+                         <span className='text-3xl text-indigo-600 mr-1 pt-2'>
+                        <img src={coloredlogomain} alt="Logo" className="rounded-full rise-2 shadow-8xl w-20 h-12"
+                             width={40} height={40}/>
+                    </span>
                     </div>
                 </div>
             </nav>
-            <div className="w-screen min-h-[calc(100vh-4.3vh)] md:min-h-[calc(100vm-7vh)] bg-sky-900 mt-10 px-10 pt-20  text-center justify-center">
+            <div
+                className="w-screen min-h-[calc(100vh-4.3vh)] md:min-h-[calc(100vm-7vh)] bg-sky-900 mt-10 px-10 pt-20  text-center justify-center">
                 <p className='uppercase font-bold text-white text-2xl'>Change password</p>
                 <form onSubmit={handlesubmit} method="POST" className='text-center justify-center my-10'>
                     <div className="mt-8 grid grid-col-1 text-center justify-center">
@@ -138,7 +175,7 @@ export default function NewPassword(){
                         Change Password
                     </button>
                 </form>
-
+                <ToastContainer/>
             </div>
         </>
     )

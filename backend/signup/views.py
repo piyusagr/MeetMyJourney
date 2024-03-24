@@ -49,7 +49,6 @@ def verify(request):
 
     try:
         user_profile = User.objects.get(email=email, verification_token=verification_code, is_verified=False)
-        
         user_profile.is_verified = True
         user_profile.save()
         return Response(status=status.HTTP_200_OK)
@@ -89,20 +88,21 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 # @api_view(['POST'])
-@authentication_classes([SessionAuthentication, BasicAuthentication])
+@authentication_classes([AllowAny])
 @api_view(['POST'])
 @csrf_exempt
 
-def create_interview(request, company_name):
+def create_interview(request):
     if request.method == 'POST':
-
+        company_name=request.data.get("company_name")
         try:
             company = Company.objects.get(name=company_name)
         except Company.DoesNotExist:
             return Response({'error': 'Company not found'}, status=404)
 
+
         data = {
-            'company': company.id,
+            'company_id': company.id,
             'profile_name': request.data.get('profilename'),
             'application': request.data.get('application'),
             'interview_process': request.data.get('interview'),
