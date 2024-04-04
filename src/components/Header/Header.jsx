@@ -6,11 +6,12 @@ const Header = () => {
     let Links = [
         { name: "Home", link: "/main" },
         { name: "Company", link: "/company" },
+        { name: "About", link: "/about"},
     ];
     let [open, setOpen] = useState(false);
     return (
-        <div className='shadow-md w-full fixed top-0 left-0 bg-sky-900'>
-            <div className='md:flex items-center justify-between  py-2 md:px-10 px-7'>
+        <nav className='shadow-md w-full fixed top-0 left-0 bg-sky-900'>
+            <nav className='md:flex items-center justify-between  py-2 md:px-10 px-7'>
                 <div className='font-bold text-2xl cursor-pointer text-yellow-400 flex items-center font-[Poppins] '>
                     <span className='text-3xl text-indigo-600 mr-1 pt-2 '>
                         <img src={coloredlogomain} alt="Logo" className="rounded-full rise-2 shadow-8xl w-14 h-12" width={40} height={40}/>
@@ -31,8 +32,8 @@ const Header = () => {
                     }
 
                 </ul>
-            </div>
-        </div>
+            </nav>
+        </nav>
     )
 }
 

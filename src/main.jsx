@@ -12,6 +12,7 @@ import VerificationPage from './components/verify/EmailVerification.jsx'
 import ForgetPassword from './components/forget/Forgetpassword.jsx'
 import VerificationForget from "./components/forget/VerifyForget.jsx";
 import NewPassword from "./components/forget/NewPassword.jsx";
+import About from './components/About/About.jsx'
 
 
 const router = createBrowserRouter(
@@ -27,7 +28,8 @@ const router = createBrowserRouter(
         <Route path='main' element={<Main />} />
         <Route path="company" element={<Company />} />
         <Route path="companydetail/form" element={<CompanyForm />} />
-        <Route path="/company/:companyName" element={<InterviewExperience/>} />
+        <Route path="company/:companyName" element={<InterviewExperience/>} />
+        <Route path="about" element={<About/>}/>
       </Route>
     </>
   )

@@ -87,7 +87,6 @@ class CompanyListCreateView(generics.ListCreateAPIView):
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
-# @api_view(['POST'])
 @authentication_classes([AllowAny])
 @api_view(['POST'])
 @csrf_exempt
