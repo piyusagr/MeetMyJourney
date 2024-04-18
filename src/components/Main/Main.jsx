@@ -20,7 +20,6 @@ const Main = () => {
         acer, adidas, adobe, apple, amazon,
         barclays, expedia, ford, mastercard, visa
     ];
-
     const settings = {
         infinite: true,
         slidesToShow: 4,
@@ -36,7 +35,7 @@ const Main = () => {
             {
                 breakpoint: 768,
                 settings: {
-                    slidesToShow: 3,
+                    slidesToShow: 2,
                     slidesToScroll: 1,
                 },
             },
@@ -67,7 +66,7 @@ const Main = () => {
             <div className="carousel-container rounded-full pb-[10rem] px-[2rem] md:px-[7rem]">
                 <Slider {...settings} >
                     {logos.map((imgUrl, index) => (
-                        <CarouselItem key={index} imgUrl={imgUrl} />
+                        <CarouselItem key={index} className="mx-2" imgUrl={imgUrl} />
                     ))}
                 </Slider>
             </div>

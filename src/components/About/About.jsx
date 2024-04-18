@@ -1,4 +1,3 @@
-import React from "react";
 import OIP from '/public/OIP.jpg';
 
 export default function About(){
@@ -22,7 +21,12 @@ export default function About(){
             <img src={OIP} alt="image" className="rounded-xl  max-h-80 max-w-110"/>
         </div>
            
-            
+        {/*<div>*/}
+        {/*    <h2 className="capitalize text-2xl text-yellow-400 text-center font-bold">Our Team</h2>*/}
+        {/*    <div>*/}
+        {/*        */}
+        {/*    </div>*/}
+        {/*</div>*/}
             
     </div>
     );

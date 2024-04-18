@@ -66,7 +66,7 @@ const Login = () => {
                         draggable: true,
                         progress: undefined,
                         theme: "colored",
-                        onClose: ()=>navigate("/main"),
+                        onClose: ()=>navigate(`/main`),
                     });
     
                 } else {

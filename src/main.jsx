@@ -13,7 +13,7 @@ import ForgetPassword from './components/forget/Forgetpassword.jsx'
 import VerificationForget from "./components/forget/VerifyForget.jsx";
 import NewPassword from "./components/forget/NewPassword.jsx";
 import About from './components/About/About.jsx'
-
+import Contact from './components/Contact/Contact.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +30,8 @@ const router = createBrowserRouter(
         <Route path="companydetail/form" element={<CompanyForm />} />
         <Route path="company/:companyName" element={<InterviewExperience/>} />
         <Route path="about" element={<About/>}/>
+        <Route path="contact" element={<Contact/>}/>
+        {/*<Route path="interview-preparation" element={<Preparation/>}/>*/}
       </Route>
     </>
   )
