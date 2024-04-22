@@ -2,7 +2,7 @@ import OIP from '/public/OIP.jpg';
 
 export default function About(){
  return (
-    <div className="pt-20 mt-10 px-10 bg-sky-900 justify-center max-w-screen h-screen ">
+    <div className="pt-20  px-10 bg-sky-900 justify-center max-w-screen h-screen ">
         <p className="font-bold text-2xl mb-6 text-yellow-400 uppercase text-center items-middle">About Us</p>
         <div className="grid grid-cols-1 md:grid-cols-2 mb-6">
             <div>
@@ -20,13 +20,6 @@ export default function About(){
             </div>
             <img src={OIP} alt="image" className="rounded-xl  max-h-80 max-w-110"/>
         </div>
-           
-        {/*<div>*/}
-        {/*    <h2 className="capitalize text-2xl text-yellow-400 text-center font-bold">Our Team</h2>*/}
-        {/*    <div>*/}
-        {/*        */}
-        {/*    </div>*/}
-        {/*</div>*/}
             
     </div>
     );

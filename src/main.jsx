@@ -14,6 +14,8 @@ import VerificationForget from "./components/forget/VerifyForget.jsx";
 import NewPassword from "./components/forget/NewPassword.jsx";
 import About from './components/About/About.jsx'
 import Contact from './components/Contact/Contact.jsx'
+import Techupdate from './components/Tech_Update/techupdate.jsx'
+import Mockinterview from "./components/Mockinterview/mockinterview.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,7 +33,8 @@ const router = createBrowserRouter(
         <Route path="company/:companyName" element={<InterviewExperience/>} />
         <Route path="about" element={<About/>}/>
         <Route path="contact" element={<Contact/>}/>
-        {/*<Route path="interview-preparation" element={<Preparation/>}/>*/}
+        <Route path="tech-update" element={<Techupdate/>}/>
+        <Route path="mock-interview-scheduler" element={<Mockinterview/>}/>
       </Route>
     </>
   )
