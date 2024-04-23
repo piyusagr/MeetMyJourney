@@ -1,14 +1,32 @@
 // InterviewExperience.jsx
-import  { useState, useRef } from "react";
+import {useState, useRef, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import InterviewExperienceCard from "./InterviewExperienceCard";
 import FormInterview from "./Forminterview";
 // import { toast } from "react-toastify"; // Make sure to import the necessary modules
 
 const InterviewExperience = () => {
-    const { companyName } = useParams();
+    const { companyName} = useParams();
     const [details, setDetails] = useState([]);
+    useEffect(() => {
+        fetchExperience();
+    }, []);
 
+    const fetchExperience = async () => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/api/companies/${companyName}/interviews`);
+            if (response.ok) {
+                const data = await response.json();
+                setDetails(data);
+                console.log(data)
+
+            } else {
+                console.error("Failed to fetch companies");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
     const addProfile = (profile) => {
         setDetails([...details, profile]);
     };

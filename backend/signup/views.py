@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import User, Company, Interview
-from .serializers import UserSerializer, CompanySerializer, InterviewExperienceSerializer
+from .models import User, Company, Interview, MockInterview
+from .serializers import UserSerializer, CompanySerializer, InterviewSerializer, MockInterviewSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -84,41 +84,19 @@ class CompanyListCreateView(generics.ListCreateAPIView):
     serializer_class = CompanySerializer
     print(Company.logo)
 
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated, AllowAny
 
-@authentication_classes([AllowAny])
-@api_view(['POST'])
-@csrf_exempt
-
-def create_interview(request):
-    if request.method == 'POST':
-        company_name=request.data.get("company_name")
-        try:
-            company = Company.objects.get(name=company_name)
-        except Company.DoesNotExist:
-            return Response({'error': 'Company not found'}, status=404)
-
-
-        data = {
-            'company_id': company.id,
-            'profile_name': request.data.get('profilename'),
-            'application': request.data.get('application'),
-            'interview_process': request.data.get('interview'),
-            'interview_question': request.data.get('interviewquestion'),
-            'offer': request.data.get('offer', False),
-            'easy': request.data.get('easy', False),
-            'medium': request.data.get('medium', False),
-            'hard': request.data.get('hard', False),
-        }
-
-        serializer = InterviewExperienceSerializer(data=data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
-    return Response({'error': 'Invalid request method'}, status=400)
+class InterviewCreateView(generics.ListCreateAPIView):
+    queryset = Interview.objects.all()
+    serializer_class = InterviewSerializer
+    permission_classes = [AllowAny]
+#     def perform_create(self, serializer):
+#             company_name = self.request.data.get("companyName")
+#             try:
+#                 company = Company.objects.get(name=company_name)
+#             except Company.DoesNotExist:
+#                 return Response({'error': 'Company not found'}, status=404)
+#             serializer.validated_data['company'] = company
+#             serializer.save()
 
 @api_view(['POST'])
 @csrf_exempt
@@ -162,3 +140,8 @@ def new_password(request):
             user.save()
             return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@permission_classes([AllowAny])
+class MockInterviewCreateView(generics.CreateAPIView):
+    queryset = MockInterview.objects.all()
+    serializer_class = MockInterviewSerializer

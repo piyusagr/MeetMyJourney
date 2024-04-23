@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const FormInterview = ({ companyName, addProfile }) => {
     const [profilename, setProfilename] = useState("");
@@ -16,25 +17,22 @@ const FormInterview = ({ companyName, addProfile }) => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`http://localhost:8000/api/api/companies/${companyName}/interviews/`, {
-                method: "POST",
+            const response = await axios.post(`http://localhost:8000/api/api/companies/${companyName}/interviews/`, {
+                companyName,
+                profilename,
+                application,
+                interview,
+                interviewquestion,
+                offer,
+                easy,
+                medium,
+                hard,
+            }, {
                 headers: {
                     "Content-Type": "application/json",
                     "X-CSRFToken": Cookies.get("csrftoken"),
-                    "Authorization": "Basic " + btoa("your_username:your_password"),
-
-                },
-                body: JSON.stringify({
-                    profilename,
-                    application,
-                    interview,
-                    interviewquestion,
-                    offer,
-                    easy,
-                    medium,
-                    hard,
-                }),
-            });
+                },}
+            );
 
             if (response.ok) {
                 const data = await response.json();

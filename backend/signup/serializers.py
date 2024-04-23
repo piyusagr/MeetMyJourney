@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from .models import Interview, User, Company
+from .models import Interview, User, Company, MockInterview
+
+class MockInterviewSerializer(serializers.ModelSerializer):
+  class Meta:
+      model = MockInterview
+      fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,7 +17,7 @@ class CompanySerializer(serializers.ModelSerializer):
         model = Company
         fields = '__all__'
 
-class InterviewExperienceSerializer(serializers.ModelSerializer):
+class InterviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Interview
         fields = '__all__'

@@ -1,7 +1,6 @@
-
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-
+import uuid
 
 class User(models.Model):
     name = models.CharField(max_length=255)
@@ -28,5 +27,18 @@ class Interview(models.Model):
 
     def __str__(self):
         return f"{self.profile_name} - {self.company.name}"
-   
-   
+
+
+class MockInterview(models.Model):
+    name = models.CharField(max_length=255)
+    resume = models.FileField(null=True,upload_to='resumes/')
+    date = models.DateField()
+    time = models.TimeField()
+    google_meet_link = models.CharField(null=True, max_length=255, unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.google_meet_link:
+            meeting_id = str(uuid.uuid4())
+            self.google_meet_link = f'https://meet.google.com/{meeting_id}'
+        super().save(*args, **kwargs)
+

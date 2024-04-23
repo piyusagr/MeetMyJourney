@@ -59,7 +59,7 @@ const Main = () => {
                     <img
                         src={photo}
                         alt="interview"
-                        className="object-cover items-centerjustify--between transform border border-spacing-4 skew-y-6 rounded-2xl my-[20vh]"
+                        className="object-cover items-center justify--between  border border-spacing-4 skew-y-6 rounded-2xl my-[20vh]"
                     />
                 </div>
             </div>
