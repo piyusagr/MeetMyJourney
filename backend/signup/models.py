@@ -31,6 +31,7 @@ class Interview(models.Model):
 
 class MockInterview(models.Model):
     name = models.CharField(max_length=255)
+    email = models.EmailField(null=True)
     resume = models.FileField(null=True,upload_to='resumes/')
     date = models.DateField()
     time = models.TimeField()
