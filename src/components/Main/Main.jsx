@@ -4,7 +4,7 @@ import acer from '/public/logo/acer.png';
 import adidas from '/public/logo/adidas.png';
 import adobe from '/public/logo/adobe.png';
 import amazon from '/public/logo/amazon.png';
-import apple from '/public/logo/apple.png';
+import apple from '/public/logo/Apple.png';
 import barclays from '/public/logo/barclays.png';
 import expedia from '/public/logo/expedia.png';
 import ford from '/public/logo/ford.png';
