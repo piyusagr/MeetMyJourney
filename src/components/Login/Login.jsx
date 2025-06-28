@@ -44,12 +44,19 @@ const Login = () => {
             try {
                 const csrftoken = Cookies.get('csrftoken');
 
+                // Build headers object conditionally
+                const headers = {
+                    'Content-Type': 'application/json',
+                };
+
+                // Only add CSRF token header if it exists
+                if (csrftoken) {
+                    headers['X-CSRFToken'] = csrftoken;
+                }
+
                 const response = await fetch("http://localhost:8000/api/api/login/", {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken,
-                    },
+                    headers: headers,
                     body: JSON.stringify({ email: email, password: password }),
                 });
 
